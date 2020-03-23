@@ -74,6 +74,8 @@ title(["Plot for score analysis: pen\_mode:", num2str(pen_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = 0.3:0.3:0.9
+% for cap_rat = 1
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -97,6 +99,8 @@ title(["Plot for score analysis: pen\_mode:", num2str(pen_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = 0.3:0.3:0.9
+% for cap_rat = 1
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -120,6 +124,8 @@ title(["Plot for score analysis: pen\_mode:", num2str(pen_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = 0.3:0.3:0.9
+% for cap_rat = 1
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -163,6 +169,8 @@ title(["Plot for score analysis: rep\_mode:", num2str(sel_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = [0.2,0.8]
+% for cap_rat = 1
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -187,6 +195,8 @@ title(["Plot for score analysis: rep\_mode:", num2str(sel_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = [0.2,0.8]
+% for cap_rat = 1
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -222,6 +232,7 @@ for cap_rat = [0.25, 0.5, 0.75]
     % Linear Penalty
     pen_mode = 1;
     sel_mode = 0; 
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -236,6 +247,7 @@ for cap_rat = [0.25, 0.5, 0.75]
     % Quadratic Penalty
     pen_mode = 2;
     sel_mode = 0; 
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -250,6 +262,7 @@ for cap_rat = [0.25, 0.5, 0.75]
     % Random Repair
     pen_mode = 0;
     sel_mode = 1; 
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -264,6 +277,7 @@ for cap_rat = [0.25, 0.5, 0.75]
     % Least_value Repair
     pen_mode = 0;
     sel_mode = 2; 
+    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -273,4 +287,3 @@ for cap_rat = [0.25, 0.5, 0.75]
 end
 all_scores = [all_scores; best_scores' ];
 all_scores = all_scores./max(all_scores)*100;
-disp(all_scores)
