@@ -49,4 +49,4 @@ end
 [X,Y] = meshgrid(population_size,gen_max);
 figure, surf(X, Y, best_matrix');
 xlabel('population size')
-ylabel('generation')
+ylabel('
