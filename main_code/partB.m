@@ -12,7 +12,7 @@ pen_mode = 0; % Not used yet
 sel_mode = 0; % Not used yet
 cap_rat = 0.65;
 
-seed = 40277854; % Use your student number
+seed = 0; % Use your student number
 [profit, weight] = genDataset(seed);
 
 % weight_max = NaN;% Calculate weight_max, with total weight and capacity ratio...!
@@ -56,7 +56,7 @@ pen_mode = 0; % Not used yet
 sel_mode = 0; % Not used yet
 cap_rat = 0.65;
 
-seed = 40277854; % Use your student number
+seed = 0; % Use your student number
 [profit, weight] = genDataset(seed);
 
 % weight_max = NaN;% Calculate weight_max, with total weight and capacity ratio...!
@@ -147,7 +147,7 @@ sel_mode = 1; % Not used yet
 cap_rat = 0.65;
 
 
-seed = 40277854; % Use your student number
+seed = 0; % Use your student number
 [profit, weight] = genDataset(seed);
 
 with_validate = 0;
@@ -211,7 +211,7 @@ sel_no = 25; % Selection of 20 individuals for mating, each generation
 mut_rate = 0.02; % Mutation rate 0<mut_rate<1 where 0.02 = 2%
 elite_no = 5; % Not used yet
 
-seed = 40277854; % Use your student number
+seed = 0; % Use your student number
 [profit, weight] = genDataset(seed);
 
 with_validate = 0;
