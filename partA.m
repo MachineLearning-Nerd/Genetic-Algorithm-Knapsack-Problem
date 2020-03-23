@@ -31,6 +31,7 @@ with_validation = 0;
     sel_no, mut_rate, with_validation);
 
 plot(1:gen_max, scores, 'DisplayName', 'Best Scores(Without validate)')
+% With validation
 with_validation = 1;
 [scores] = ga_A(gen_max, pop_size,...
     profit, weight, weight_max,...
