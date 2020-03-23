@@ -1,8 +1,8 @@
 % FIRST FUNCTION NAME MATCHES THE FILE NAME
 % [return variables...]         (argument variables...)
-function [scores] = ga_B (gen_max, pop_size,...
+function [scores] = ga_C (gen_max, pop_size,...
     profit, weight, weight_max,...
-    sel_no, mut_rate, elite_no, pen_mode, sel_mode, with_validate, mean_sol)
+    sel_no, mut_rate, elite_no, pen_mode, sel_mode, with_validate, mean_sol, score_stop)
 
     % INITIALISE POPULATION here
     pop_ITL = initialise_pop(pop_size, weight);
@@ -23,11 +23,17 @@ function [scores] = ga_B (gen_max, pop_size,...
         if mean_sol == 1
             best_score = mean(pop_score);
             scores = [scores; best_score];
-        elseif mean_sol = 2
-            
+        elseif mean_sol == 2
+            mean_score = mean(pop_score);
+            best_score = max(pop_score);
+            scores = [scores; [best_score, mean_score]];
         else
             best_score = max(pop_score);
             scores = [scores; best_score];
+        end
+        
+        if max(scores(:,1)) >= score_stop
+            break
         end
 
         % Penanlty here

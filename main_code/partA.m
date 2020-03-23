@@ -8,7 +8,7 @@ pen_mode = 0; % Not used yet
 sel_mode = 0; % Not used yet
 cap_rat = 0.65;
 
-seed = 0; % Use your student number
+seed = 40277854; % Use your student number
 [profit, weight] = genDataset(seed);
 
 % weight_max = NaN;% Calculate weight_max, with total weight and capacity ratio...!

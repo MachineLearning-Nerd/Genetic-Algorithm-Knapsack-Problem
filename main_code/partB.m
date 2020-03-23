@@ -12,7 +12,7 @@ pen_mode = 0; % Not used yet
 sel_mode = 0; % Not used yet
 cap_rat = 0.65;
 
-seed = 0; % Use your student number
+seed = 40277854; % Use your student number
 [profit, weight] = genDataset(seed);
 
 % weight_max = NaN;% Calculate weight_max, with total weight and capacity ratio...!
@@ -56,7 +56,7 @@ pen_mode = 0; % Not used yet
 sel_mode = 0; % Not used yet
 cap_rat = 0.65;
 
-seed = 0; % Use your student number
+seed = 40277854; % Use your student number
 [profit, weight] = genDataset(seed);
 
 % weight_max = NaN;% Calculate weight_max, with total weight and capacity ratio...!
@@ -74,8 +74,6 @@ title(["Plot for score analysis: pen\_mode:", num2str(pen_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = 0.3:0.3:0.9
-% for cap_rat = 1
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -99,8 +97,6 @@ title(["Plot for score analysis: pen\_mode:", num2str(pen_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = 0.3:0.3:0.9
-% for cap_rat = 1
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -124,8 +120,6 @@ title(["Plot for score analysis: pen\_mode:", num2str(pen_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = 0.3:0.3:0.9
-% for cap_rat = 1
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -153,7 +147,7 @@ sel_mode = 1; % Not used yet
 cap_rat = 0.65;
 
 
-seed = 0; % Use your student number
+seed = 40277854; % Use your student number
 [profit, weight] = genDataset(seed);
 
 with_validate = 0;
@@ -169,8 +163,6 @@ title(["Plot for score analysis: rep\_mode:", num2str(sel_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = [0.2,0.8]
-% for cap_rat = 1
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -195,8 +187,6 @@ title(["Plot for score analysis: rep\_mode:", num2str(sel_mode)])
 xlabel("Generations")
 ylabel("Score")
 for cap_rat = [0.2,0.8]
-% for cap_rat = 1
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -221,7 +211,7 @@ sel_no = 25; % Selection of 20 individuals for mating, each generation
 mut_rate = 0.02; % Mutation rate 0<mut_rate<1 where 0.02 = 2%
 elite_no = 5; % Not used yet
 
-seed = 0; % Use your student number
+seed = 40277854; % Use your student number
 [profit, weight] = genDataset(seed);
 
 with_validate = 0;
@@ -232,7 +222,6 @@ for cap_rat = [0.25, 0.5, 0.75]
     % Linear Penalty
     pen_mode = 1;
     sel_mode = 0; 
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -247,7 +236,6 @@ for cap_rat = [0.25, 0.5, 0.75]
     % Quadratic Penalty
     pen_mode = 2;
     sel_mode = 0; 
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -262,7 +250,6 @@ for cap_rat = [0.25, 0.5, 0.75]
     % Random Repair
     pen_mode = 0;
     sel_mode = 1; 
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -277,7 +264,6 @@ for cap_rat = [0.25, 0.5, 0.75]
     % Least_value Repair
     pen_mode = 0;
     sel_mode = 2; 
-    disp(cap_rat)
     weight_max = cap_rat*sum(weight);
     % Run the GA
     [scores] = ga_B(gen_max, pop_size,...
@@ -287,3 +273,4 @@ for cap_rat = [0.25, 0.5, 0.75]
 end
 all_scores = [all_scores; best_scores' ];
 all_scores = all_scores./max(all_scores)*100;
+disp(all_scores)
