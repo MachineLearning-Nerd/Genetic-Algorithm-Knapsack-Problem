@@ -1,39 +1,56 @@
 % FIRST FUNCTION NAME MATCHES THE FILE NAME
 % [return variables...]         (argument variables...)
-function [scores, valid_scores] = ga_B (gen_max, pop_size,...
+function [scores] = ga_B (gen_max, pop_size,...
     profit, weight, weight_max,...
-    sel_no, mut_rate, elite_no, pen_mode, sel_mode)
+    sel_no, mut_rate, elite_no, pen_mode, sel_mode, with_validate)
 
     % INITIALISE POPULATION here
     pop_ITL = initialise_pop(pop_size, weight);
     scores = [];
-    valid_scores = [];
+
     for gen = 1:gen_max
         % FITNESS CALCULATE here
         pop_score = calc_fitness(pop_ITL, profit);
+        
         % VALIDITY CHECK here
-        valid_pop_score = validate(pop_ITL, pop_score, weight, weight_max);
+        if with_validate == 1
+            pop_score = validate(pop_ITL, pop_score, weight, weight_max);
+        end
+        
         % RECORDS 
         best_score = max(pop_score);
         scores = [scores; best_score];
-        valid_scores = [valid_scores; max(valid_pop_score)];
-        pop_score = valid_pop_score;
+        
+        % Penanlty here
+        if pen_mode ~= 0
+            pop_score = penalty_function(profit, pop_ITL, weight, weight_max, pen_mode);
+        end
         
         % SELECTION here
         [max_pop_SEL, max_score, pop_SEL, pop_score] = elite_selection(pop_ITL, pop_score, elite_no);
+        if elite_no > sel_no
+            elite_no = sel_no;
+        end
         [pop_SEL] = calc_selection(pop_SEL, pop_score, sel_no-elite_no);
-        pop_SEL = [max_pop_SEL ; pop_SEL];
+%         pop_SEL = [max_pop_SEL ; pop_SEL];
+        disp(gen)
+        dis
         % CROSSOVER here
-        [pop_XVR] = calc_crossover(pop_SEL, pop_size);
+        [pop_XVR] = calc_crossover(pop_SEL, sel_no);
         % MUTATION here
         [pop_ITL] = calc_mutation_01(pop_XVR, mut_rate);
+        
+        pop_ITL = [max_pop_SEL ; pop_ITL];
     end
 end
 
-function [pop_PEN] = penalty_function(profit, pop, weight, weight_max, pen_mode)
+function [V] = penalty_function(profit, pop, weight, weight_max, pen_mode)
     T = sum(weight);
     Q = min([weight_max, abs(T-weight_max)]);
-    pop_score = pop*profit;
+    S = pop*profit;
+    Y = pop * weight;
+    D = weight_max -Y;
+    V = (S.*(D).^pen_mode/Q);
 end
 
 % ADD OTHER FUNCTIONS TO BE CALLED FROM THE ga_TEMPLATE FUNCTION HERE...

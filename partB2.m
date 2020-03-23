@@ -5,9 +5,9 @@ close all
 % GA Parameters
 gen_max = 150; % 150 Max generations
 pop_size = 50; % Population size of 50
-sel_no = 20; % Selection of 20 individuals for mating, each generation
+sel_no = 25; % Selection of 20 individuals for mating, each generation
 mut_rate = 0.02; % Mutation rate 0<mut_rate<1 where 0.02 = 2%
-elite_no = 3; % Not used yet
+elite_no = 0; % Not used yet
 pen_mode = 0; % Not used yet
 sel_mode = 0; % Not used yet
 cap_rat = 0.65;
