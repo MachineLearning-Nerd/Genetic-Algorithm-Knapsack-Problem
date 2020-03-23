@@ -9,7 +9,7 @@ seed = 40277854; % Use your student number
 [profit, weight] = genDataset(seed);
 cap_rat = 0.1;
 weight_max = cap_rat*sum(weight);% Calculate weight_max, with total weight and capacity ratio...!
-% [opt_score, opt_sol] = knapsack_solution(profit, weight, weight_max);
+[opt_score, opt_sol] = knapsack_solution(profit, weight, weight_max);
 
 
 % GA Parameters
@@ -36,7 +36,8 @@ best_matrix = [];
 for m = 1:(mval)
 pop_size = population_size(m);
 best_scores = zeros(nval,1);
-parfor n = 1:(nval)
+for n = 1:(nval)
+% parfor n = 1:(nval)
 % Run the GA
 [scores] = ga_C(gen_max(n), pop_size,...
     profit, weight, weight_max,...
