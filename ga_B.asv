@@ -2,13 +2,15 @@
 % [return variables...]         (argument variables...)
 function [scores] = ga_B (gen_max, pop_size,...
     profit, weight, weight_max,...
-    sel_no, mut_rate, elite_no, pen_mode, sel_mode, with_validate)
+    sel_no, mut_rate, elite_no, pen_mode, sel_mode, with_validate, mean_sol)
 
     % INITIALISE POPULATION here
     pop_ITL = initialise_pop(pop_size, weight);
     scores = [];
 
     for gen = 1:gen_max
+        weight = repair_mechanism(profit, weight, sel_mode);
+        
         % FITNESS CALCULATE here
         pop_score = calc_fitness(pop_ITL, profit);
         
@@ -18,30 +20,50 @@ function [scores] = ga_B (gen_max, pop_size,...
         end
         
         % RECORDS 
-        best_score = max(pop_score);
-        scores = [scores; best_score];
-        
+        if mean_sol == 1
+            best_score = mean(pop_score);
+            scores = [scores; best_score];
+        elseif mean_sol = 2
+            
+        else
+            best_score = max(pop_score);
+            scores = [scores; best_score];
+        end
+
         % Penanlty here
         if pen_mode ~= 0
-            pop_score = penalty_function(profit, pop_ITL, weight, weight_max, pen_mode);
+            pen_score = penalty_function(profit, pop_ITL, weight, weight_max, pen_mode);
+            pop_score = pop_score - pen_score;
         end
         
         % SELECTION here
         [max_pop_SEL, max_score, pop_SEL, pop_score] = elite_selection(pop_ITL, pop_score, elite_no);
-        if elite_no > sel_no
-            elite_no = sel_no;
-        end
         [pop_SEL] = calc_selection(pop_SEL, pop_score, sel_no-elite_no);
 %         pop_SEL = [max_pop_SEL ; pop_SEL];
-        disp(gen)
-        dis
+
         % CROSSOVER here
-        [pop_XVR] = calc_crossover(pop_SEL, sel_no);
-        % MUTATION here
-        [pop_ITL] = calc_mutation_01(pop_XVR, mut_rate);
+        if size(pop_SEL, 1) ~= 0
+            [pop_XVR] = calc_crossover(pop_SEL, sel_no);
+            % MUTATION here
+            [pop_ITL] = calc_mutation_01(pop_XVR, mut_rate);
+            pop_ITL = [max_pop_SEL ; pop_ITL];
+        else
+            pop_ITL = max_pop_SEL;
+        end
         
-        pop_ITL = [max_pop_SEL ; pop_ITL];
     end
+end
+
+function [new_weights] = repair_mechanism(profit, weight, sel_mode)
+new_weights = weight;
+if sel_mode == 2
+    [~, j] = min(profit/weight);
+    new_weights(j) = 0;
+end
+if sel_mode == 1
+    j = randi(length(weight));
+    new_weights(j) = 0;
+end
 end
 
 function [V] = penalty_function(profit, pop, weight, weight_max, pen_mode)

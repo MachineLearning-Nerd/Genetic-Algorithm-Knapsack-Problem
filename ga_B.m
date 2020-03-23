@@ -2,13 +2,15 @@
 % [return variables...]         (argument variables...)
 function [scores] = ga_B (gen_max, pop_size,...
     profit, weight, weight_max,...
-    sel_no, mut_rate, elite_no, pen_mode, sel_mode, with_validate)
+    sel_no, mut_rate, elite_no, pen_mode, sel_mode, with_validate, mean_sol)
 
     % INITIALISE POPULATION here
     pop_ITL = initialise_pop(pop_size, weight);
     scores = [];
 
     for gen = 1:gen_max
+        weight = repair_mechanism(profit, weight, sel_mode);
+        
         % FITNESS CALCULATE here
         pop_score = calc_fitness(pop_ITL, profit);
         
@@ -18,12 +20,22 @@ function [scores] = ga_B (gen_max, pop_size,...
         end
         
         % RECORDS 
-        best_score = max(pop_score);
-        scores = [scores; best_score];
-        
+        if mean_sol == 1
+            best_score = mean(pop_score);
+            scores = [scores; best_score];
+        elseif mean_sol == 2
+            mean_score = mean(pop_score);
+            best_score = max(pop_score);
+            scores = [scores; [best_score, mean_score]];
+        else
+            best_score = max(pop_score);
+            scores = [scores; best_score];
+        end
+
         % Penanlty here
         if pen_mode ~= 0
-            pop_score = penalty_function(profit, pop_ITL, weight, weight_max, pen_mode);
+            pen_score = penalty_function(profit, pop_ITL, weight, weight_max, pen_mode);
+            pop_score = pop_score - pen_score;
         end
         
         % SELECTION here
@@ -42,6 +54,18 @@ function [scores] = ga_B (gen_max, pop_size,...
         end
         
     end
+end
+
+function [new_weights] = repair_mechanism(profit, weight, sel_mode)
+new_weights = weight;
+if sel_mode == 2
+    [~, j] = min(profit/weight);
+    new_weights(j) = 0;
+end
+if sel_mode == 1
+    j = randi(length(weight));
+    new_weights(j) = 0;
+end
 end
 
 function [V] = penalty_function(profit, pop, weight, weight_max, pen_mode)
