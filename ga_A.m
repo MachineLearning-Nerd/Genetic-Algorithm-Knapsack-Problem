@@ -2,7 +2,7 @@
 % [return variables...]         (argument variables...)
 function [scores] = ga_A (gen_max, pop_size,...
     profit, weight, weight_max,...
-    sel_no, mut_rate)
+    sel_no, mut_rate, with_validate)
 
     % INITIALISE POPULATION here
     pop_ITL = initialise_pop(pop_size, weight);
@@ -10,10 +10,17 @@ function [scores] = ga_A (gen_max, pop_size,...
     for gen = 1:gen_max
         % FITNESS CALCULATE here
         pop_score = calc_fitness(pop_ITL, profit);
+
         % VALIDITY CHECK here
+        if with_validate == 1
+            valid_pop_score = validate(pop_ITL, pop_score, weight, weight_max);
+            pop_score = valid_pop_score;
+        end
+        
         % RECORDS 
         best_score = max(pop_score);
         scores = [scores; best_score];
+        
         % SELECTION here
         [pop_SEL] = calc_selection(pop_ITL, pop_score, sel_no);
         % CROSSOVER here
@@ -35,7 +42,15 @@ end
 % Returns score vector of [m-individuals x 1]
 function [pop_score] = calc_fitness(pop, profit)
     pop_score = pop*profit;
+
 end
+
+function [valid_pop_score] = validate(pop, pop_score, weight, weight_max)
+    pop_weights = pop*weight;
+    % VALIDITY OF POP
+    valid_pop_score = pop_score.* (pop_weights < weight_max);
+end
+
 
 % Select <sel_no> from the population
 % Returns population matrix [sel_no-individuals x n-genes]
