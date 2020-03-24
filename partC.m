@@ -36,7 +36,8 @@ best_matrix = [];
 for m = 1:(mval)
 pop_size = population_size(m);
 best_scores = zeros(nval,1);
-for n = 1:(nval)
+parfor n = 1:(nval)
+disp([num2str(m), num2str(n)])
 % parfor n = 1:(nval)
 % Run the GA
 [scores] = ga_C(gen_max(n), pop_size,...

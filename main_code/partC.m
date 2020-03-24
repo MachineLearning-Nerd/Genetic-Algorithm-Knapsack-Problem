@@ -28,24 +28,26 @@ with_validate = 1;
 pen_mode = 0;
 sel_mode = 2;
 
-population_size = 10:10:100;
+population_size = 20:20:100;
 mval = length(population_size);
-gen_max = 10:10:300;
+gen_max = 60:30:300;
 nval = length(gen_max);
 best_matrix = [];
-for m = 1:length(mval)
+for m = 1:(mval)
 pop_size = population_size(m);
 best_scores = zeros(nval,1);
-parfor n = 1:length(nval)
+for n = 1:(nval)
+% parfor n = 1:(nval)
 % Run the GA
 [scores] = ga_C(gen_max(n), pop_size,...
     profit, weight, weight_max,...
     sel_no, mut_rate, elite_no, pen_mode, sel_mode, with_validate, meansol, score_stop);
 best_scores(n,1) = max(scores);
 end
-best_matrix = [best_matrix, best_scores];
+best_matrix = [best_matrix; best_scores'];
 end
 
 [X,Y] = meshgrid(population_size,gen_max);
-figure, surf(X, Y, best_matrix);
-
+figure, surf(X, Y, best_matrix');
+xlabel('population size')
+ylabel('generation')
